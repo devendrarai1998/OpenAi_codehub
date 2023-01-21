@@ -6,6 +6,21 @@ const chatContainer = document.querySelector('#chat_container')
 
 let loadInterval
 
+
+// function loader(element) {
+//   element.textContent = ''
+
+//   loadInterval = setInterval(() => {
+//     // Update the text content of the loading indicator
+//     element.textContent += '.';
+
+//     // If the loading indicator has reached three dots, reset it
+//     if (element.textContent === '....') {
+//       element.textContent = '';
+//     }
+//   }, 300);
+// }
+
 function loader(element) {
   element.textContent = ''
 
@@ -19,6 +34,20 @@ function loader(element) {
     }
   }, 300);
 }
+
+
+// function typeText(element, text) {
+//   let index = 0
+
+//   let interval = setInterval(() => {
+//     if (index < text.length) {
+//       element.innerHTML += text.charAt(index)
+//       index++
+//     } else {
+//       clearInterval(interval)
+//     }
+//   }, 20)
+// }
 
 function typeText(element, text) {
   let index = 0
@@ -62,42 +91,74 @@ function chatStripe(isAi, value, uniqueId) {
   )
 }
 
+// const handleSubmit = async (e) => {
+//   e.preventDefault()
+
+//   const data = new FormData(form)
+
+//   // user's chatstripe
+//   chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+
+//   // to clear the textarea input 
+//   form.reset()
+
+//   // bot's chatstripe
+//   const uniqueId = generateUniqueId()
+//   chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+
+//   // to focus scroll to the bottom 
+//   chatContainer.scrollTop = chatContainer.scrollHeight;
+
+//   // specific message div 
+//   const messageDiv = document.getElementById(uniqueId)
+
+//   // messageDiv.innerHTML = "..."
+//   loader(messageDiv)
+
+//   const response = await fetch('https://openai-codehub.onrender.com', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       prompt: data.get('prompt')
+
 const handleSubmit = async (e) => {
-  e.preventDefault()
+      e.preventDefault()
 
-  const data = new FormData(form)
+      const data = new FormData(form)
 
-  // user's chatstripe
-  chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
+      // user's chatstripe
+      chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
-  // to clear the textarea input 
-  form.reset()
+      // to clear the textarea input 
+      form.reset()
 
-  // bot's chatstripe
-  const uniqueId = generateUniqueId()
-  chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
+      // bot's chatstripe
+      const uniqueId = generateUniqueId()
+      chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
-  // to focus scroll to the bottom 
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+      // to focus scroll to the bottom 
+      chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  // specific message div 
-  const messageDiv = document.getElementById(uniqueId)
+      // specific message div 
+      const messageDiv = document.getElementById(uniqueId)
 
-  // messageDiv.innerHTML = "..."
-  loader(messageDiv)
+      // messageDiv.innerHTML = "..."
+      loader(messageDiv)
 
-  const response = await fetch('https://openai-codehub.onrender.com', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      prompt: data.get('prompt')
+      const response = await fetch('https://openai-codehub.onrender.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                  prompt: data.get('prompt')
     })
-  })
+   })
 
-  clearInterval(loadInterval)
-  messageDiv.innerHTML = " ";
+   clearInterval(loadInterval)
+   messageDiv.innerHTML = " ";
 
   if (response.ok) {
     const data = await response.json();
